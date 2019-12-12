@@ -1,19 +1,31 @@
 require 'csv'
 require 'active_support/all'
 
-
 # This script converts Snoo data export (request from support@happiestbaby.com)
 # into a data grid suitable for displaying visually.
 
 # To-do: fix offset for DST.
 
-# Params
+# -------------------------------
+# PARAMS
+
+# Dates to visualize
 start_date = Date.parse("2 July 2019")
 end_date = Date.parse("1 Dec 2019")
+
+# Where should a full "day" of data start? If you use the Snoo at night time only then an hour before bedtime is a good point.
 offset = 18.hours
+
+# 5 minutes granularity works well
 window = 5.minutes
-infile = "./data/bq-results-20191203-133916-mzpbt9uqmio.csv"
+
+# Data file locations
+infile = "./data/export-from-happiest-baby.csv"
 outfile = "./data/grid-#{Time.now.to_s}.csv"
+
+# /PARAMS
+# -------------------------------
+
 
 # Load CSV and convert to eventstream
 puts "Reading data from #{infile}"
