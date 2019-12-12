@@ -1,4 +1,4 @@
-# Snoo Data Analysis
+# Snoo Smart Sleeper: Data Analysis
 
 The Snoo basinet from [The Happiest Baby](https://happiestbaby.com) is a life-changing device for new parents.
 
