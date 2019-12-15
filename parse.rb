@@ -34,7 +34,21 @@ events = CSV.foreach(
     headers: true, converters: [:numeric, ->(v) { Time.parse(v) rescue v }]
   ).
   to_a.
-  filter!{|e| e["session_id"].to_s.size >= 12}
+
+# If you look at the data you'll see there appears to a be a duplicate
+# set of events, with a different format session_id. 
+
+# From Snoo support:
+# > The two sets of data are essentially the same data, 
+# > but can have minor differences.
+# > The long session_id entries are the raw data sent from SNOO as events happen. 
+# > Because they are raw data, sometimes some pieces of data can be missing
+# > such as a level-up event missing because there was a network glitch. 
+# > Whenever a session ends, SNOO would send a summary with all the info 
+# > in that sleep session, and these are the data in the short session_id.
+
+# Ergo, we remove the longer "UUID" format session_id data.
+  filter!{|e| e["session_id"].to_s.size < 12}
 
 # Create grid structure
 dates = (start_date ... end_date).to_a
